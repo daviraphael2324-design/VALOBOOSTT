@@ -2,6 +2,12 @@
 // VALOBOOST - SISTEMA FRONTEND (MOCKUP)
 // ============================================
 
+// CONFIGURAÇÃO DA API
+// IMPORTANTE: Como você publicou o site, "localhost" não vai funcionar em outros celulares/PCs, 
+// pois "localhost" significa "na própria máquina da pessoa".
+// Você precisa alterar o link abaixo para o IP ou a URL onde o seu `server.js` está rodando online!
+const API_BASE_URL = 'https://valoboost-backend-1.onrender.com'; // Backend hospedado no Render!
+
 // --- ESTADOS E BD SIMULADO (localStorage) ---
 let usuarios = JSON.parse(localStorage.getItem('vb_users')) || [];
 let usuarioLogado = JSON.parse(localStorage.getItem('vb_logged')) || null;
@@ -82,7 +88,7 @@ async function iniciarCadastro(e) {
     const senha = document.getElementById('reg-senha').value;
 
     try {
-        const res = await fetch('http://localhost:3000/api/users/check', {
+        const res = await fetch(`${API_BASE_URL}/api/users/check`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
@@ -134,7 +140,7 @@ async function verificarCodigo(e) {
 
     if (codigoDigitado === codigoVerificacaoAtual) {
         try {
-            const res = await fetch('http://localhost:3000/api/users/register', {
+            const res = await fetch(`${API_BASE_URL}/api/users/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(usuarioPendente)
@@ -163,7 +169,7 @@ async function realizarLogin(e) {
     const senha = document.getElementById('login-senha').value;
 
     try {
-        const res = await fetch('http://localhost:3000/api/users/login', {
+        const res = await fetch(`${API_BASE_URL}/api/users/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })
@@ -172,7 +178,7 @@ async function realizarLogin(e) {
 
         if (data.success) {
             // Puxar pedidos logo do banco de dados na hora do login pra sessão local
-            const resOrders = await fetch(`http://localhost:3000/api/orders/${email}`);
+            const resOrders = await fetch(`${API_BASE_URL}/api/orders/${email}`);
             const orders = await resOrders.json();
 
             const userData = { ...data.user, pedidos: orders };
@@ -385,7 +391,7 @@ async function confirmarPagamentoMock() {
     };
 
     try {
-        const res = await fetch('http://localhost:3000/api/orders', {
+        const res = await fetch(`${API_BASE_URL}/api/orders`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(novoPedido)
@@ -475,7 +481,7 @@ function mostrarAbaAdmin(aba) {
 
 async function carregarDadosAdmin() {
     try {
-        const res = await fetch('http://localhost:3000/api/admin/orders');
+        const res = await fetch(`${API_BASE_URL}/api/admin/orders`);
         const todosPedidos = await res.json();
 
         const listPedidos = document.getElementById('admin-lista-pedidos');
@@ -503,7 +509,7 @@ async function carregarDadosAdmin() {
 async function resetarSistema() {
     if (confirm("ATENÇÃO: Isso vai apagar todas as contas e pedidos do Banco de Dados real. Deseja continuar?")) {
         try {
-            await fetch('http://localhost:3000/api/admin/reset', { method: 'POST' });
+            await fetch(`${API_BASE_URL}/api/admin/reset`, { method: 'POST' });
             localStorage.clear();
             location.reload();
         } catch (err) {
