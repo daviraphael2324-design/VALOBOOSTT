@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ValoBoost | Oficial - Plataforma Completa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("oJWn2OtyFJeMjKi8f");
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="container">
+            <div class="logo">VALO<span>BOOST</span></div>
+            <ul class="menu" id="main-menu">
+                <li><a href="javascript:void(0)" onclick="mostrarAba('inicio')">Início</a></li>
+                <li><a href="javascript:void(0)" onclick="mostrarAba('calculadora')">Elo Boost</a></li>
+                <li><a href="javascript:void(0)" onclick="mostrarAba('suporte')">Suporte</a></li>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="abrirCarrinho()"><i class="fa-solid fa-cart-shopping"></i><span
+                            class="badge" id="cart-count">0</span></button>
+                    <button id="btn-auth-header" class="btn-outline" onclick="abrirAuth()">Login</button>
+                    <button id="btn-user-header" style="display:none;" class="btn-outline"
+                        onclick="mostrarAba('dashboard')"><i class="fa-solid fa-user"></i> <span
+                            id="user-name-display">Conta</span></button>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ABA: INÍCIO -->
+        <section id="inicio" class="aba active hero">
+            <div class="container hero-content">
+                <h1 class="glow-text">ALCANCE O <span class="rank-radiant">DIAMANTE</span> HOJE</h1>
+                <p>A plataforma mais segura e rápida de subida de elo do mercado.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="mostrarAba('calculadora')">Faça seu Orçamento</button>
+                    <button class="btn-outline" onclick="mostrarAba('como-funciona')">Como Funciona</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA: COMO FUNCIONA -->
+        <section id="como-funciona" class="aba container section-padding">
+            <h2 class="section-title">Como Funciona?</h2>
+            <div class="cards-grid">
+                <div class="card-step">
+                    <i class="fa-solid fa-crosshairs"></i>
+                    <h3>01. Selecione</h3>
+                    <p>Escolha seus elos na aba de Elo Boost e adicione ao carrinho.</p>
+                </div>
+                <div class="card-step">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <h3>02. Pague</h3>
+                    <p>Crie sua conta e pague de forma segura. Aceitamos PIX e Cartão.</p>
+                </div>
+                <div class="card-step">
+                    <i class="fa-solid fa-rocket"></i>
+                    <h3>03. Suba</h3>
+                    <p>Nossos boosters Radiant assumem e você acompanha em tempo real.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA: ELO BOOST CALCULADORA -->
+        <section id="calculadora" class="aba section-padding">
+            <div class="container">
+                <h2 class="section-title">CALCULADORA DE ELO BOOST</h2>
+                <div class="calculator-wrapper">
+                    <div class="calc-box glass-panel">
+                        <div class="step-badge">1</div>
+                        <p class="label">ELO ATUAL</p>
+                        <div class="rank-display">
+                            <img id="img-atual" src="" class="rank-img" alt="Elo Atual">
+                        </div>
+                        <select id="elo-atual" onchange="atualizarCalculo()" class="select-rank">
+                            <option value="0">FERRO</option>
+                            <option value="1">BRONZE</option>
+                            <option value="2">PRATA</option>
+                            <option value="3">OURO</option>
+                            <option value="4">PLATINA</option>
+                            <option value="5">DIAMANTE</option>
+                        </select>
+                        <select id="div-atual" onchange="atualizarCalculo()" class="select-div">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+
+                    <div class="plus-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="calc-box glass-panel">
+                        <div class="step-badge">2</div>
+                        <p class="label">ELO DESEJADO</p>
+                        <div class="rank-display">
+                            <img id="img-desejado" src="" class="rank-img" alt="Elo Desejado">
+                        </div>
+                        <select id="elo-desejado" onchange="atualizarCalculo()" class="select-rank">
+                            <option value="0">FERRO</option>
+                            <option value="1">BRONZE</option>
+                            <option value="2">PRATA</option>
+                            <option value="3">OURO</option>
+                            <option value="4">PLATINA</option>
+                            <option value="5" selected>DIAMANTE</option>
+                        </select>
+                        <select id="div-desejado" onchange="atualizarCalculo()" class="select-div">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pedido-box glass-panel">
+                    <div class="pedido-info">
+                        <p>RESUMO DO PEDIDO</p>
+                        <h3 id="resumo-texto" class="resumo-highlight">---</h3>
+                    </div>
+                    <div class="pedido-preco">
+                        <p>VALOR TOTAL</p>
+                        <h2 id="valor-total">R$ 0,00</h2>
+                    </div>
+                    <button class="btn-primary" id="btn-comprar" onclick="adicionarAoCarrinho()"><i
+                            class="fa-solid fa-cart-plus"></i> ADICIONAR AO CARRINHO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA: SUPORTE -->
+        <section id="suporte" class="aba container section-padding">
+            <div class="suporte-box glass-panel" style="text-align: center;">
+                <h2 class="section-title">Central de Suporte</h2>
+                <i class="fa-brands fa-discord" style="font-size: 5rem; color: #5865F2; margin-bottom: 20px;"></i>
+                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">
+                    Nosso suporte agora é 100% via Discord para garantir a melhor e mais rápida resposta para você!
+                </p>
+                <a href="https://discord.gg/SQ75BB6g" target="_blank" class="btn-primary"
+                    style="width:100%; text-decoration: none; background: #5865F2; border-color: #5865F2;">
+                    <i class="fa-brands fa-discord"></i> Clique aqui e fale conosco no Discord
+                </a>
+            </div>
+        </section>
+
+        <!-- ABA: DASHBOARD (Logado) -->
+        <section id="dashboard" class="aba container section-padding" style="display:none;">
+            <div class="dashboard-grid">
+                <div class="glass-panel profile-sidebar">
+                    <div class="profile-header">
+                        <div class="avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                        <h3 id="dashboard-username">Usuário</h3>
+                        <p id="dashboard-email">email@teste.com</p>
+                    </div>
+                    <ul class="dashboard-menu">
+                        <li class="active"><i class="fa-solid fa-box-open"></i> Meus Pedidos</li>
+                        <li onclick="deslogar()"><i class="fa-solid fa-sign-out-alt"></i> Sair da Conta</li>
+                    </ul>
+                </div>
+                <div class="glass-panel orders-content">
+                    <h2>Meus Pedidos de Boost</h2>
+                    <div id="lista-pedidos" class="orders-list">
+                        <!-- Pedidos renderizados por JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- COMPONENTES FIXOS/SOBREPOSTOS -->
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container"></div>
+
+    <!-- MODAL AUTHENTICATION -->
+    <div id="modal-auth" class="modal">
+        <div class="modal-content glass-panel" style="max-width: 400px; padding: 40px;">
+            <span class="close" onclick="fecharAuth()">&times;</span>
+            <div class="auth-forms">
+
+                <!-- LOGIN -->
+                <form id="form-login" onsubmit="realizarLogin(event)">
+                    <h2>Entrar na Conta</h2>
+                    <p class="subtitle">Bem-vindo de volta ao ValoBoost</p>
+                    <input type="email" id="login-email" placeholder="E-mail" class="input-padrao" required>
+                    <input type="password" id="login-senha" placeholder="Senha" class="input-padrao" required>
+                    <button type="submit" class="btn-primary" style="width:100%">Fazer Login</button>
+                    <p class="switch-form">Não tem conta? <a href="javascript:void(0)"
+                            onclick="trocarFormAuth('register')">Cadastre-se</a></p>
+                </form>
+
+                <!-- REGISTER -->
+                <form id="form-register" onsubmit="iniciarCadastro(event)" style="display:none;">
+                    <h2>Criar Conta</h2>
+                    <p class="subtitle">Junte-se à elite do Valorant</p>
+                    <input type="text" id="reg-nome" placeholder="Nickname" class="input-padrao" required>
+                    <input type="email" id="reg-email" placeholder="E-mail válido" class="input-padrao" required>
+                    <input type="password" id="reg-senha" placeholder="Crie uma senha" class="input-padrao" required>
+                    <button type="submit" class="btn-primary" style="width:100%">Continuar</button>
+                    <p class="switch-form">Já tem conta? <a href="javascript:void(0)"
+                            onclick="trocarFormAuth('login')">Faça Login</a></p>
+                </form>
+
+                <!-- VERIFY CODE -->
+                <form id="form-verify" onsubmit="verificarCodigo(event)" style="display:none;">
+                    <h2>Verificação</h2>
+                    <p class="subtitle">Enviamos um código para o seu e-mail!</p>
+                    <p style="font-size: 0.8rem; color: var(--accent-yellow); margin-bottom: 15px;"><i>(Verifique sua caixa de Spam/Lixo Eletrônico!)</i></p>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="code-1" class="code-input" maxlength="1" required>
+                        <input type="text" id="code-2" class="code-input" maxlength="1" required>
+                        <input type="text" id="code-3" class="code-input" maxlength="1" required>
+                        <input type="text" id="code-4" class="code-input" maxlength="1" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:100%">Verificar e Entrar</button>
+                    <p class="switch-form"><a href="javascript:void(0)" onclick="trocarFormAuth('register')">Voltar</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR CARRINHO -->
+    <div id="carrinho-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fa-solid fa-cart-shopping"></i> Seu Carrinho</h2>
+            <button class="icon-btn" onclick="fecharCarrinho()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="sidebar-content" id="carrinho-items">
+            <!-- Itens do carrinho gerados via JS -->
+            <div class="empty-cart"><i class="fa-solid fa-ghost"></i><br>Seu carrinho está vazio</div>
+        </div>
+        <div class="sidebar-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-value">R$ 0,00</span>
+            </div>
+            <button class="btn-primary w-100" onclick="iniciarCheckout()">FINALIZAR COMPRA</button>
+        </div>
+    </div>
+    <div id="carrinho-overlay" class="overlay" onclick="fecharCarrinho()"></div>
+
+    <!-- MODAL CHECKOUT & PAGAMENTO -->
+    <div id="modal-checkout" class="modal">
+        <div class="modal-content glass-panel" style="max-width: 500px; padding: 30px;">
+            <span class="close" onclick="fecharCheckout()">&times;</span>
+            <h2>Pagamento Seguro</h2>
+            <div class="checkout-steps">
+                <div class="checkout-resumo" id="checkout-resumo">
+                    <!-- Resumo inserido via JS -->
+                </div>
+
+                <div class="payment-methods">
+                    <p class="label">Escolha a forma de pagamento:</p>
+                    <div class="methods-grid" style="grid-template-columns: 1fr;">
+                        <div class="method-card active" onclick="selecionarMetodo(this, 'pix')">
+                            <i class="fa-brands fa-pix" style="color:#32bcad;"></i>
+                            <span>PIX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pix-payment" class="payment-details">
+                    <div class="qrcode-placeholder">
+                        <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=46645769865" alt="QR Code PIX" style="border-radius:8px; margin-bottom:15px;">
+                        <p>Chave PIX (Celular/CPF)</p>
+                        <h4 style="margin: 15px 0; color: var(--success); font-size: 1.5rem; letter-spacing: 2px;"
+                            id="chave-pix">46645769865</h4>
+                        <button class="btn-outline" style="margin-top:10px;" onclick="copiarPix()"><i
+                                class="fa-solid fa-copy"></i> Copiar Chave PIX</button>
+                    </div>
+                    <button class="btn-primary w-100" onclick="confirmarPagamentoMock()">Confirmar Pagamento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ADMIN (ALT + M) -->
+    <div id="modal-admin" class="modal">
+        <div class="modal-content glass-panel" style="max-width: 800px; padding: 30px;">
+            <span class="close" onclick="fecharAdmin()">&times;</span>
+
+            <div id="admin-login-area">
+                <h2 style="color:var(--primary-red); margin-bottom: 20px;"><i class="fa-solid fa-shield-halved"></i>
+                    ÁREA RESTRITA</h2>
+                <input type="text" id="admin-user" placeholder="Usuário Admin" class="input-padrao">
+                <input type="password" id="admin-senha" placeholder="Senha Admin" class="input-padrao">
+                <button class="btn-primary w-100" onclick="logarAdmin()">Acessar Painel</button>
+            </div>
+
+            <div id="admin-panel-area" style="display:none;">
+                <h2 style="color:var(--accent-yellow); margin-bottom: 20px;"><i class="fa-solid fa-crown"></i> Painel de
+                    Administração</h2>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <button class="btn-outline active admin-tab-btn" onclick="mostrarAbaAdmin('pedidos')">Ver
+                        Pedidos</button>
+                    <!-- Aba suporte removida, agora o suporte é via discord -->
+                </div>
+
+                <div id="admin-aba-pedidos" class="admin-aba" style="display:block;">
+                    <h3 style="margin-bottom: 15px;">Todos os Pedidos (Clientes)</h3>
+                    <div id="admin-lista-pedidos"
+                        style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+                    </div>
+                </div>
+
+                <!-- Aba Suporte removida do Admin -->
+            </div>
+
+    <!-- BOTAO RESET DADOS (APENAS PARA DEV/TESTE) -->
+    <button onclick="resetarSistema()" style="position:fixed; bottom:20px; left:20px; z-index:9999; background:#444; color:#fff; border:1px solid #777; padding:8px 12px; font-size:0.8rem; border-radius:4px; cursor:pointer;" title="Limpar todo o Banco de Dados (Teste)">
+        <i class="fa-solid fa-rotate-left"></i> Resetar BD
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
